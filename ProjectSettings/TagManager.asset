@@ -10,6 +10,7 @@ TagManager:
   - Blue
   - GoggleFilterText
   - NoFilter
+  - Button
   layers:
   - Default
   - TransparentFX
