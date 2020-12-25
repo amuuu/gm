@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class PlayerButtonInteraction : MonoBehaviour
 {
+
+    public bool isJetpackActive;
     private bool isCollidingWithButton;
+    private bool isCollidingWithJetpack;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        isCollidingWithButton = false;    
+        isCollidingWithButton = false;
+        isCollidingWithJetpack = false;
+        isJetpackActive = false;
     }
 
     // Update is called once per frame
@@ -19,6 +25,11 @@ public class PlayerButtonInteraction : MonoBehaviour
         {
             Debug.Log("SHIT");
 
+        }
+        if (isCollidingWithJetpack && Input.GetKeyDown(KeyCode.E))
+        {
+            isJetpackActive = true;
+            Debug.Log("JETPACK ACTIVE");
         }
     }
 
@@ -30,11 +41,27 @@ public class PlayerButtonInteraction : MonoBehaviour
         {
             isCollidingWithButton = true;
         }
+        if(collision.gameObject.tag == "Jetpack")
+        {
+            isCollidingWithJetpack = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        
-        isCollidingWithButton = false;
+        if (isCollidingWithButton)
+        {
+            isCollidingWithButton = false;
+        }
+        if (isCollidingWithJetpack)
+        {
+            isCollidingWithJetpack = false;
+
+            if(isJetpackActive)
+            {
+                collision.gameObject.SetActive(false);
+                
+            }
+        }
     }
 }

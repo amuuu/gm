@@ -11,6 +11,8 @@ TagManager:
   - GoggleFilterText
   - NoFilter
   - Button
+  - Jetpack
+  - JetpackChargeText
   layers:
   - Default
   - TransparentFX
