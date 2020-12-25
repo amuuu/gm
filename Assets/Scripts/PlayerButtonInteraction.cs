@@ -4,18 +4,26 @@ using UnityEngine;
 
 public class PlayerButtonInteraction : MonoBehaviour
 {
-
-    public bool isJetpackActive;
     private bool isCollidingWithButton;
+
     private bool isCollidingWithJetpack;
+    public bool isJetpackActive;
+
+    private bool isCollidingWithTablet;
+    public bool isTabletActive;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
         isCollidingWithButton = false;
+        
         isCollidingWithJetpack = false;
         isJetpackActive = false;
+
+        isCollidingWithTablet = false;
+        isTabletActive = false;
     }
 
     // Update is called once per frame
@@ -23,13 +31,18 @@ public class PlayerButtonInteraction : MonoBehaviour
     {
         if (isCollidingWithButton && Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log("SHIT");
+            Debug.Log("BUTTON PRESSED");
 
         }
         if (isCollidingWithJetpack && Input.GetKeyDown(KeyCode.E))
         {
             isJetpackActive = true;
-            Debug.Log("JETPACK ACTIVE");
+            Debug.Log("JETPACK ACTIVATED");
+        }
+        if (isCollidingWithTablet && Input.GetKeyDown(KeyCode.E))
+        {
+            isTabletActive = true;
+            Debug.Log("TABLET ACTIVATED");
         }
     }
 
@@ -44,6 +57,10 @@ public class PlayerButtonInteraction : MonoBehaviour
         if(collision.gameObject.tag == "Jetpack")
         {
             isCollidingWithJetpack = true;
+        }
+        if(collision.gameObject.tag == "Tablet")
+        {
+            isCollidingWithTablet = true;
         }
     }
 
@@ -60,7 +77,15 @@ public class PlayerButtonInteraction : MonoBehaviour
             if(isJetpackActive)
             {
                 collision.gameObject.SetActive(false);
-                
+            }
+        }
+        if (isCollidingWithTablet)
+        {
+            isCollidingWithTablet = false;
+
+            if(isTabletActive)
+            {
+                collision.gameObject.SetActive(false);
             }
         }
     }

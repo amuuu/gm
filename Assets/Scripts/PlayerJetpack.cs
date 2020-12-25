@@ -15,50 +15,50 @@ public class PlayerJetpack : MonoBehaviour
     private PlayerButtonInteraction buttonScript;
     private Rigidbody2D rb;
 
-    // Start is called before the first frame update
     void Start()
     {
         isActive = false;
         jetpackCharge = 100.0f;
         buttonScript = this.GetComponent<PlayerButtonInteraction>();
         rb = GetComponent<Rigidbody2D>();
-        UpdateTextUI();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (buttonScript.isJetpackActive && !isActive)
         {
             isActive = buttonScript.isJetpackActive;
+            UpdateTextUI(100);
         }
 
         if ((isActive && Input.GetKey(KeyCode.G)) || (jetpackCharge <= 0.0f))
         {
             isActive = false;
             buttonScript.isJetpackActive = false;
+            UpdateTextUI(-1);
         }
 
-        UpdateTextUI();
     }
 
     private void FixedUpdate()
     {
         if (isActive && Input.GetKey(KeyCode.W))
         {
-            Debug.Log("ASFUGADFUAJSD");
             rb.AddForce(new Vector2(0, 5 * jetpackPower), ForceMode2D.Impulse);
             jetpackCharge -= jetpackChargeRate;
-            UpdateTextUI();
+            UpdateTextUI((int) jetpackCharge);
         }
     }
 
-    void UpdateTextUI()
+    void UpdateTextUI(int value)
     {
         GameObject jetpackChargeText = GameObject.FindGameObjectsWithTag("JetpackChargeText")[0];
 
         var text = jetpackChargeText.GetComponent<Text>();
 
-        text.text = "JETPACK CHARGE: " + (int)jetpackCharge + "%"; 
+        if (value != -1)
+            text.text = "JETPACK CHARGE: " + value + "%";
+        else
+            text.text = "";
     }
 }

@@ -50,7 +50,7 @@ public class PlayerJump : MonoBehaviour
     {
         if (isJumpPressed && isOnGround)
         {
-            Debug.Log("ONE TIME");
+            //Debug.Log("ONE TIME");
             rb.AddForce(new Vector2(0, 15*jumpTime), ForceMode2D.Impulse);
 
             isOnGround = false;
