@@ -12,7 +12,7 @@ public class PlayerButtonInteraction : MonoBehaviour
     private bool isCollidingWithTablet;
     public bool isTabletActive;
 
-
+    private GameObject wonMenu;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +24,9 @@ public class PlayerButtonInteraction : MonoBehaviour
 
         isCollidingWithTablet = false;
         isTabletActive = false;
+
+        wonMenu = GameObject.FindGameObjectsWithTag("WonMenu")[0];
+        wonMenu.SetActive(false);
     }
 
     // Update is called once per frame
@@ -32,6 +35,8 @@ public class PlayerButtonInteraction : MonoBehaviour
         if (isCollidingWithButton && Input.GetKeyDown(KeyCode.E))
         {
             Debug.Log("BUTTON PRESSED");
+            wonMenu.SetActive(true);
+           
 
         }
         if (isCollidingWithJetpack && Input.GetKeyDown(KeyCode.E))
