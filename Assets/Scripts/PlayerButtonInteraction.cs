@@ -4,89 +4,85 @@ using UnityEngine;
 
 public class PlayerButtonInteraction : MonoBehaviour
 {
-    private bool isCollidingWithButton;
+    private bool isCollidingWithButtonGameObject;
 
-    private bool isCollidingWithJetpack;
+    private bool isCollidingWithJetpackGameObject;
     public bool isJetpackActive;
 
-    private bool isCollidingWithTablet;
+    private bool isCollidingWithTabletGameObject;
     public bool isTabletActive;
 
     private GameObject wonMenu;
 
-    // Start is called before the first frame update
     void Start()
     {
-        isCollidingWithButton = false;
+        isCollidingWithButtonGameObject = false;
         
-        isCollidingWithJetpack = false;
+        isCollidingWithJetpackGameObject = false;
         isJetpackActive = false;
 
-        isCollidingWithTablet = false;
+        isCollidingWithTabletGameObject = false;
         isTabletActive = false;
 
         wonMenu = GameObject.FindGameObjectsWithTag("WonMenu")[0];
         wonMenu.SetActive(false);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (isCollidingWithButton && Input.GetKeyDown(KeyCode.E))
+        if (isCollidingWithButtonGameObject && Input.GetKeyDown(KeyCode.E))
         {
             Debug.Log("BUTTON PRESSED");
             wonMenu.SetActive(true);
-           
-
         }
-        if (isCollidingWithJetpack && Input.GetKeyDown(KeyCode.E))
+        if (isCollidingWithJetpackGameObject && Input.GetKeyDown(KeyCode.E))
         {
             isJetpackActive = true;
             Debug.Log("JETPACK ACTIVATED");
         }
-        if (isCollidingWithTablet && Input.GetKeyDown(KeyCode.E))
+        if (isCollidingWithTabletGameObject && Input.GetKeyDown(KeyCode.E))
         {
             isTabletActive = true;
             Debug.Log("TABLET ACTIVATED");
         }
     }
 
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
-        if(collision.gameObject.tag == "Button")
+        if (collision.gameObject.tag == "Button")
         {
-            isCollidingWithButton = true;
+            isCollidingWithButtonGameObject = true;
         }
-        if(collision.gameObject.tag == "Jetpack")
+        if (collision.gameObject.tag == "Jetpack")
         {
-            isCollidingWithJetpack = true;
+            isCollidingWithJetpackGameObject = true;
         }
-        if(collision.gameObject.tag == "Tablet")
+        if (collision.gameObject.tag == "Tablet")
         {
-            isCollidingWithTablet = true;
+            isCollidingWithTabletGameObject = true;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (isCollidingWithButton)
+        if (isCollidingWithButtonGameObject)
         {
-            isCollidingWithButton = false;
+            isCollidingWithButtonGameObject = false;
         }
-        if (isCollidingWithJetpack)
+        
+        if (isCollidingWithJetpackGameObject)
         {
-            isCollidingWithJetpack = false;
+            isCollidingWithJetpackGameObject = false;
 
             if(isJetpackActive)
             {
                 collision.gameObject.SetActive(false);
             }
         }
-        if (isCollidingWithTablet)
+        
+        if (isCollidingWithTabletGameObject)
         {
-            isCollidingWithTablet = false;
+            isCollidingWithTabletGameObject = false;
 
             if(isTabletActive)
             {
