@@ -32841,8 +32841,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83f1e1992c62c4f9f87cff1d8cb6d101, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jetpackPower: 0.3
-  jetpackChargeRate: 0.3
+  jetpackConfig: {fileID: 11400000, guid: 9ac4eeba5d55eda458723e1e9495b575, type: 2}
 --- !u!114 &2111685091
 MonoBehaviour:
   m_ObjectHideFlags: 0

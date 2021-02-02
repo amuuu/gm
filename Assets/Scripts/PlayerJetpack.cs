@@ -3,62 +3,85 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerJetpack : MonoBehaviour
+class PlayerJetpack: MonoBehaviour
 {
+    private JetpackModel model;
+    public JetpackConfigData jetpackConfig;
+    private JetpackView view;
 
-    public float jetpackPower;
-    public float jetpackChargeRate;
-
-    private float jetpackCharge;
-
-    private bool isActive;
     private PlayerButtonInteraction buttonScript;
     private Rigidbody2D rb;
 
     void Start()
     {
-        isActive = false;
-        jetpackCharge = 100.0f;
+        model = new JetpackModel();
+        view = new JetpackView();
+
         buttonScript = this.GetComponent<PlayerButtonInteraction>();
         rb = GetComponent<Rigidbody2D>();
     }
-
     void Update()
     {
-        if (buttonScript.isJetpackActive && !isActive)
+        if (buttonScript.isJetpackActive && !model.isActive)
         {
-            isActive = buttonScript.isJetpackActive;
-            UpdateTextUI(100);
+            model.isActive = buttonScript.isJetpackActive;
+            view.UpdateJetpackChargeTextUI(100);
         }
 
-        if ((isActive && Input.GetKey(KeyCode.G)) || (jetpackCharge <= 0.0f))
+        if ((model.isActive && Input.GetKey(KeyCode.G)) || (model.jetpackCharge <= 0.0f))
         {
-            isActive = false;
+            model.isActive = false;
             buttonScript.isJetpackActive = false;
-            UpdateTextUI(-1);
+            view.UpdateJetpackChargeTextUI(-1);
         }
-
     }
 
     private void FixedUpdate()
     {
-        if (isActive && Input.GetKey(KeyCode.W))
+        if (model.isActive && Input.GetKey(KeyCode.W))
         {
-            rb.AddForce(new Vector2(0, 5 * jetpackPower), ForceMode2D.Impulse);
-            jetpackCharge -= jetpackChargeRate;
-            UpdateTextUI((int) jetpackCharge);
+            rb.AddForce(new Vector2(0, 5 * jetpackConfig.jetpackPower), ForceMode2D.Impulse);
+            model.jetpackCharge -= jetpackConfig.jetpackChargeRate;
+            view.UpdateJetpackChargeTextUI((int)model.jetpackCharge);
         }
     }
+}
 
-    void UpdateTextUI(int value)
+class JetpackModel
+{
+    public float jetpackCharge;
+    public bool isActive;
+
+    public JetpackModel()
     {
-        GameObject jetpackChargeText = GameObject.FindGameObjectsWithTag("JetpackChargeText")[0];
+        jetpackCharge = 100.0f;
+        isActive = false;
+    }
+}
 
-        var text = jetpackChargeText.GetComponent<Text>();
+class JetpackView
+{
+    GameObject textUI;
+
+    public JetpackView()
+    {
+        textUI = GameObject.FindGameObjectsWithTag("JetpackChargeText")[0];
+    }
+
+    public void UpdateJetpackChargeTextUI(int value)
+    {
+        var textComponent = textUI.GetComponent<Text>();
 
         if (value != -1)
-            text.text = "JETPACK CHARGE: " + value + "%";
+            textComponent.text = "JETPACK CHARGE: " + value + "%";
         else
-            text.text = "";
+            textComponent.text = "";
     }
+}
+
+[CreateAssetMenu(menuName = "ScriptableObjects/JetpackConfig", order = 3)]
+class JetpackConfigData : ScriptableObject
+{
+    public float jetpackChargeRate; // 0.3
+    public float jetpackPower; // 0.3
 }
