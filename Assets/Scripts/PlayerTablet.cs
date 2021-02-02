@@ -38,7 +38,14 @@ class PlayerTablet: MonoBehaviour
 
             model.tabletCharge -= 20f;
         }
-        
+
+        if (model.tabletCharge <= 0.0f)
+        {
+            model.isActive = false;
+            buttonScript.isTabletActive = false;
+            view.UpdateTabletChargeTextUI(-1);
+        }
+
         if (model.isActive)
             view.UpdateTabletChargeTextUI((int)model.tabletCharge);
     }
@@ -59,7 +66,6 @@ class TabletModel
         tabletCharge = 100.0f;
         isBeingUsed = false;
 
-        //tabletCameraObjects = new GameObject[3];
         tabletCameraObjects = GameObject.FindGameObjectsWithTag("TabletCamera");
 
         ToggleTabletCameraObjects(false);
