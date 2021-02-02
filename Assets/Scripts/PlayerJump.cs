@@ -2,21 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerJump : MonoBehaviour
+
+class PlayerJump: MonoBehaviour
 {
-
-
-    public float jumpTime;
+    public JumpConfigData jumpConfig;
+    private JumpModel jumpModel;
 
     private Rigidbody2D rb;
-    
-    private bool isJumpPressed = false;
-    private bool isOnGround = true;
-    //private bool twoTimesPressed = false;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        jumpModel = new JumpModel();
     }
 
     void Update()
@@ -30,9 +27,9 @@ public class PlayerJump : MonoBehaviour
             isJumpPressed = true;
         }*/
 
-        if (!isJumpPressed && Input.GetKeyDown(KeyCode.Space))
+        if (!jumpModel.isJumpPressed && Input.GetKeyDown(KeyCode.Space))
         {
-            isJumpPressed = true;
+            jumpModel.isJumpPressed = true;
         }
     }
 
@@ -40,20 +37,20 @@ public class PlayerJump : MonoBehaviour
     {
         if (collision.collider.gameObject.tag == "Floor")
         {
-            isOnGround = true;
-            isJumpPressed = false;
+            jumpModel.isOnGround = true;
+            jumpModel.isJumpPressed = false;
             //twoTimesPressed = false;
         }
-
     }
+
     void FixedUpdate()
     {
-        if (isJumpPressed && isOnGround)
+        if (jumpModel.isJumpPressed && jumpModel.isOnGround)
         {
             //Debug.Log("ONE TIME");
-            rb.AddForce(new Vector2(0, 15*jumpTime), ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(0, 15 * jumpConfig.jumpTime), ForceMode2D.Impulse);
 
-            isOnGround = false;
+            jumpModel.isOnGround = false;
         }
 
         /*else if (isJumpPressed && !isOnGround && twoTimesPressed)
@@ -63,4 +60,24 @@ public class PlayerJump : MonoBehaviour
         }*/
 
     }
+
+}
+
+class JumpModel
+{
+    public bool isJumpPressed = false;
+    public bool isOnGround = true;
+
+    public JumpModel()
+    {
+        isJumpPressed = false;
+        isOnGround = true;
+    }
+}
+
+
+[CreateAssetMenu(menuName = "ScriptableObjects/JumpConfig", order = 2)]
+class JumpConfigData : ScriptableObject
+{
+    public float jumpTime; // 1.5
 }

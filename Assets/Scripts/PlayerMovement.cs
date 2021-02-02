@@ -54,7 +54,7 @@ public class MovementView
 }
 
 
-[CreateAssetMenu(menuName = "ScriptableObjects/SpawnManagerScriptableObject", order = 1)]
+[CreateAssetMenu(menuName = "ScriptableObjects/MovementConfig", order = 1)]
 public class MovementConfigData : ScriptableObject
 {
     public float movementSpeed;
