@@ -79,5 +79,5 @@ class JumpModel
 [CreateAssetMenu(menuName = "ScriptableObjects/JumpConfig", order = 2)]
 class JumpConfigData : ScriptableObject
 {
-    public float jumpTime; // 1.5
+    public float jumpTime = 1.5f; // 1.5
 }

@@ -19,6 +19,7 @@ class PlayerJetpack: MonoBehaviour
 
         buttonScript = this.GetComponent<PlayerButtonInteraction>();
         rb = GetComponent<Rigidbody2D>();
+
     }
     void Update()
     {
@@ -43,6 +44,12 @@ class PlayerJetpack: MonoBehaviour
             rb.AddForce(new Vector2(0, 5 * jetpackConfig.jetpackPower), ForceMode2D.Impulse);
             model.jetpackCharge -= jetpackConfig.jetpackChargeRate;
             view.UpdateJetpackChargeTextUI((int)model.jetpackCharge);
+            
+            view.ControlJetpackParticleSystem(true);
+        }
+        else
+        {
+            view.ControlJetpackParticleSystem(false);
         }
     }
 }
@@ -62,10 +69,15 @@ class JetpackModel
 class JetpackView
 {
     GameObject textUI;
+    GameObject particleSystemGameObject;
+    ParticleSystem particleSystem;
 
     public JetpackView()
     {
         textUI = GameObject.FindGameObjectsWithTag("JetpackChargeText")[0];
+        particleSystemGameObject = GameObject.FindGameObjectsWithTag("JetpackParticleSystem")[0];
+        particleSystem = particleSystemGameObject.GetComponent<ParticleSystem>(); 
+
     }
 
     public void UpdateJetpackChargeTextUI(int value)
@@ -77,11 +89,25 @@ class JetpackView
         else
             textComponent.text = "";
     }
+
+    public void ControlJetpackParticleSystem(bool on)
+    {
+        if (on)
+        {
+            if(!particleSystem.isPlaying)
+                particleSystem.Play();
+        }
+        else
+        {
+            if (particleSystem.isPlaying)
+                particleSystem.Stop();
+        }
+    }
 }
 
 [CreateAssetMenu(menuName = "ScriptableObjects/JetpackConfig", order = 3)]
 class JetpackConfigData : ScriptableObject
 {
-    public float jetpackChargeRate; // 0.3
-    public float jetpackPower; // 0.3
+    public float jetpackChargeRate = 0.3f; // 0.3
+    public float jetpackPower = 0.3f; // 0.3
 }

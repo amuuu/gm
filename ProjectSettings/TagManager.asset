@@ -18,6 +18,7 @@ TagManager:
   - PauseMenu
   - WonMenu
   - TabletChargeText
+  - JetpackParticleSystem
   layers:
   - Default
   - TransparentFX

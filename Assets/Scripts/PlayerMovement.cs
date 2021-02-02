@@ -40,16 +40,28 @@ public class MovementView
     private SpriteRenderer spriteRenderer;
     private GameObject gameObject;
 
+    GameObject particleSystemGameObject;
+    PlayerButtonInteraction butttonScript;
+    ParticleSystem particleSystem;
+
     public MovementView(GameObject obj)
     {
         gameObject = obj;
         
         spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+
+        butttonScript = gameObject.GetComponent<PlayerButtonInteraction>();
+
+        particleSystemGameObject = GameObject.FindGameObjectsWithTag("JetpackParticleSystem")[0];
+        particleSystem = particleSystemGameObject.GetComponent<ParticleSystem>();
     }
 
     public void SetSpriteRendererFlipX(bool b)
     {
         spriteRenderer.flipX = b;
+
+        if(butttonScript.isJetpackActive)
+            particleSystem.transform.position = new Vector3(particleSystem.transform.position.x * -1, particleSystem.transform.position.y, particleSystem.transform.position.z);
     }
 }
 
@@ -57,6 +69,6 @@ public class MovementView
 [CreateAssetMenu(menuName = "ScriptableObjects/MovementConfig", order = 1)]
 public class MovementConfigData : ScriptableObject
 {
-    public float movementSpeed;
-    public float movementTime;
+    public float movementSpeed = 4.0f;
+    public float movementTime = 2.5f;
 }
