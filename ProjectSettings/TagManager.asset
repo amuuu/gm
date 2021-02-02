@@ -17,6 +17,7 @@ TagManager:
   - Tablet
   - PauseMenu
   - WonMenu
+  - TabletChargeText
   layers:
   - Default
   - TransparentFX

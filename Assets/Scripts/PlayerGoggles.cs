@@ -54,6 +54,8 @@ public class PlayerGoggles : MonoBehaviour
         filtersNum = 4;
         filterCursor = 0;
         InitGoggleFilters();
+
+        ApplyFilter();
     }
 
     void Update()
@@ -62,14 +64,19 @@ public class PlayerGoggles : MonoBehaviour
         {
             GoToNextFilterCursor();
 
-            currentFilter = goggleFilters[filterCursor];
-            
-            goggleView.UpdateGoggleFilterTextUI(currentFilter.name);
-            
-            ActivateCurrentFilterGameObjects();
-            
-            UpdatePostProcessingEffect();
+            ApplyFilter();
         }
+    }
+
+    private void ApplyFilter()
+    {
+        currentFilter = goggleFilters[filterCursor];
+
+        goggleView.UpdateGoggleFilterTextUI(currentFilter.name);
+
+        ActivateCurrentFilterGameObjects();
+
+        UpdatePostProcessingEffect();
     }
 
     private void UpdatePostProcessingEffect()
@@ -82,7 +89,6 @@ public class PlayerGoggles : MonoBehaviour
         colorGrading.colorFilter.value = currentFilter.parameters.color;
         colorGrading.postExposure.value = currentFilter.parameters.exposure;
     }
-
 
     private void GoToNextFilterCursor()
     {
