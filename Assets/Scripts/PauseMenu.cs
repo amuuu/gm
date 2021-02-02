@@ -52,4 +52,9 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         resumeSound.Play();
     }
+
+    public void Exit()
+    {
+        Application.Quit();
+    }
 }

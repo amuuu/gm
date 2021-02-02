@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class SaveLoadManager: MonoBehaviour
 {
-    Save saveInstance;
-
     GameObject player;
     
     PlayerJetpack playerJetpack;
@@ -17,6 +15,8 @@ public class SaveLoadManager: MonoBehaviour
     GameObject red;
     GameObject green;
     GameObject blue;
+
+    [SerializeField] Save saveInstance;
 
     private void Start()
     {
@@ -34,9 +34,20 @@ public class SaveLoadManager: MonoBehaviour
 
     }
 
+
+    public void SaveGame()
+    {
+        Debug.Log("Saving the game...");
+
+        saveInstance = CreateSaveGameObject();
+        string json = JsonUtility.ToJson(saveInstance);
+        
+        System.IO.File.WriteAllText("GAME_SAVE.json", json);
+    }
+
     public Save CreateSaveGameObject()
     {
-        saveInstance = new Save();
+        Save saveInstance = new Save();
 
         saveInstance.playerPosition = (player.transform.position.x, player.transform.position.y);
 
