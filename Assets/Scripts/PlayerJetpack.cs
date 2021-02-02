@@ -52,6 +52,11 @@ class PlayerJetpack: MonoBehaviour
             view.ControlJetpackParticleSystem(false);
         }
     }
+
+    public float GetJetpackCharge()
+    {
+        return model.jetpackCharge;
+    }
 }
 
 class JetpackModel

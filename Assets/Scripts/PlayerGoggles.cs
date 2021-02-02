@@ -151,6 +151,11 @@ public class PlayerGoggles : MonoBehaviour
         if (mainCamera.tag != "MainCamera")
             return;
     }
+
+    public int GetCurrentGoggleFilterCursor()
+    {
+        return filterCursor;
+    }
 }
 
 class GogglesView

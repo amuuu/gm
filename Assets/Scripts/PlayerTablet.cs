@@ -49,6 +49,11 @@ class PlayerTablet: MonoBehaviour
         if (model.isActive)
             view.UpdateTabletChargeTextUI((int)model.tabletCharge);
     }
+
+    public float GetTabletCharge()
+    {
+        return model.tabletCharge;
+    }
 }
 
 class TabletModel
