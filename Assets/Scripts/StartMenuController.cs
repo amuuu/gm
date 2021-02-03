@@ -6,12 +6,10 @@ using UnityEngine.SceneManagement;
 public class StartMenuController : MonoBehaviour
 {
 
-    public bool shouldLoad;
-
+    GameObject loadPayloadObject;
     void Start()
     {
-        DontDestroyOnLoad(this.gameObject);
-        shouldLoad = false;
+        loadPayloadObject = GameObject.FindGameObjectsWithTag("LoadPayload")[0];
     }
 
     public void StartGame()
@@ -22,7 +20,8 @@ public class StartMenuController : MonoBehaviour
 
     public void LoadGame()
     {
-        shouldLoad = true;
+        DontDestroyOnLoad(loadPayloadObject);
+        loadPayloadObject.GetComponent<LoadPayload>().shouldLoad = true;
         StartGame();
     }
 }

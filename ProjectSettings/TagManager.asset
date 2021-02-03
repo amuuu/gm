@@ -20,6 +20,7 @@ TagManager:
   - TabletChargeText
   - JetpackParticleSystem
   - StartMenuController
+  - LoadPayload
   layers:
   - Default
   - TransparentFX

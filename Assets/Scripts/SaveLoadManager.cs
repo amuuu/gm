@@ -22,23 +22,10 @@ public class SaveLoadManager: MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.FindGameObjectsWithTag("Player")[0];
-        
-        playerJetpack = player.GetComponent<PlayerJetpack>();
-        playerTablet = player.GetComponent<PlayerTablet>();
-        playerInteractions = player.GetComponent<PlayerButtonInteraction>();
-        playerGoggles = player.GetComponent<PlayerGoggles>();
-
-        nofilter = GameObject.FindGameObjectsWithTag("NoFilter")[0];
-        red = GameObject.FindGameObjectsWithTag("Red")[0];
-        green = GameObject.FindGameObjectsWithTag("Green")[0];
-        blue = GameObject.FindGameObjectsWithTag("Blue")[0];
-
-
-        if (GameObject.Find("StartMenuController").GetComponent<StartMenuController>().shouldLoad)
+        /*if (GameObject.Find("LoadPayload").GetComponent<StartMenuController>().shouldLoad)
         {
             LoadGame();
-        }
+        }*/
     }
 
 
@@ -51,6 +38,7 @@ public class SaveLoadManager: MonoBehaviour
         
         System.IO.File.WriteAllText("GAME_SAVE.json", json);
     }
+
     public void LoadGame()
     {
         ReadSaveFile();
@@ -88,6 +76,19 @@ public class SaveLoadManager: MonoBehaviour
 
     public Save CreateSaveGameObject()
     {
+        player = GameObject.FindGameObjectsWithTag("Player")[0];
+
+        playerJetpack = player.GetComponent<PlayerJetpack>();
+        playerTablet = player.GetComponent<PlayerTablet>();
+        playerInteractions = player.GetComponent<PlayerButtonInteraction>();
+        playerGoggles = player.GetComponent<PlayerGoggles>();
+
+        nofilter = GameObject.FindGameObjectsWithTag("NoFilter")[0];
+        red = GameObject.FindGameObjectsWithTag("Red")[0];
+        green = GameObject.FindGameObjectsWithTag("Green")[0];
+        blue = GameObject.FindGameObjectsWithTag("Blue")[0];
+
+
         Save saveInstance = new Save();
 
         saveInstance.playerPosition = (player.transform.position.x, player.transform.position.y);
