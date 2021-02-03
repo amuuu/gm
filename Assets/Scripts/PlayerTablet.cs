@@ -54,6 +54,11 @@ class PlayerTablet: MonoBehaviour
     {
         return model.tabletCharge;
     }
+
+    public void SetTabletCharge(float charge)
+    {
+        model.tabletCharge = charge;
+    }
 }
 
 class TabletModel

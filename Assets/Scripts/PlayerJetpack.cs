@@ -57,6 +57,11 @@ class PlayerJetpack: MonoBehaviour
     {
         return model.jetpackCharge;
     }
+
+    public void SetJetpackCharge(float charge)
+    {
+        model.jetpackCharge = charge;
+    }
 }
 
 class JetpackModel

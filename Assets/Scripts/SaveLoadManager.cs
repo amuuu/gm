@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class SaveLoadManager: MonoBehaviour
@@ -17,6 +18,7 @@ public class SaveLoadManager: MonoBehaviour
     GameObject blue;
 
     [SerializeField] Save saveInstance;
+    [SerializeField] Save loadInstance;
 
     private void Start()
     {
@@ -32,6 +34,11 @@ public class SaveLoadManager: MonoBehaviour
         green = GameObject.FindGameObjectsWithTag("Green")[0];
         blue = GameObject.FindGameObjectsWithTag("Blue")[0];
 
+
+        if (GameObject.Find("StartMenuController").GetComponent<StartMenuController>().shouldLoad)
+        {
+            LoadGame();
+        }
     }
 
 
@@ -43,6 +50,40 @@ public class SaveLoadManager: MonoBehaviour
         string json = JsonUtility.ToJson(saveInstance);
         
         System.IO.File.WriteAllText("GAME_SAVE.json", json);
+    }
+    public void LoadGame()
+    {
+        ReadSaveFile();
+
+        player.transform.position = new Vector2(loadInstance.playerPosition.Item1, loadInstance.playerPosition.Item2);
+
+        playerInteractions.isJetpackActive = loadInstance.isJetpackActive;
+        playerJetpack.SetJetpackCharge(loadInstance.jetpackCharge);
+        
+        loadInstance.isTabletActive = playerInteractions.isTabletActive;
+        playerTablet.SetTabletCharge(loadInstance.tabletCharge);
+
+        playerGoggles.SetCurrentGoggleFilterCursor(loadInstance.currentGoggleFilterCursor);
+
+        DeactiveChildsByIndex(ref nofilter, ref saveInstance.nofilterDeactivatedObjects);
+        DeactiveChildsByIndex(ref red, ref saveInstance.redDeactivatedObjects);
+        DeactiveChildsByIndex(ref green, ref saveInstance.greenDeactivatedObjects);
+        DeactiveChildsByIndex(ref blue, ref saveInstance.blueDeactivatedObjects);
+
+    }
+    
+    public void ReadSaveFile()
+    {
+        Debug.Log("Loading the game...");
+        if (File.Exists("GAME_SAVE.json"))
+        {
+            string json = System.IO.File.ReadAllText("GAME_SAVE.json");
+            loadInstance = JsonUtility.FromJson<Save>(json);
+        }
+        else
+        {
+            Debug.Log("ERROR: Save file not found.");
+        }
     }
 
     public Save CreateSaveGameObject()
@@ -78,6 +119,19 @@ public class SaveLoadManager: MonoBehaviour
         {
             if (!child.gameObject.activeSelf)
                 targetList.Add(counter);
+            counter++;
+        }
+    }
+
+    private void DeactiveChildsByIndex(ref GameObject gameObj, ref List<int> targetList)
+    {
+        int counter = 0;
+        foreach (Transform child in gameObj.transform)
+        {
+            if (targetList.Contains(counter))
+            {
+                child.gameObject.SetActive(false);
+            }
             counter++;
         }
     }

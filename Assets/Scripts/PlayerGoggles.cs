@@ -156,6 +156,11 @@ public class PlayerGoggles : MonoBehaviour
     {
         return filterCursor;
     }
+
+    public void SetCurrentGoggleFilterCursor(int cursor)
+    {
+        filterCursor = cursor;
+    }
 }
 
 class GogglesView
