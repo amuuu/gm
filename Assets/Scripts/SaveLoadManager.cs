@@ -27,6 +27,16 @@ public class SaveLoadManager: MonoBehaviour
             LoadGame();
         }*/
         player = GameObject.FindGameObjectsWithTag("Player")[0];
+
+        playerJetpack = player.GetComponent<PlayerJetpack>();
+        playerTablet = player.GetComponent<PlayerTablet>();
+        playerInteractions = player.GetComponent<PlayerButtonInteraction>();
+        playerGoggles = player.GetComponent<PlayerGoggles>();
+
+        nofilter = GameObject.FindGameObjectsWithTag("NoFilter")[0];
+        red = GameObject.FindGameObjectsWithTag("Red")[0];
+        green = GameObject.FindGameObjectsWithTag("Green")[0];
+        blue = GameObject.FindGameObjectsWithTag("Blue")[0];
     }
 
 
@@ -76,17 +86,7 @@ public class SaveLoadManager: MonoBehaviour
     }
 
     public Save CreateSaveGameObject()
-    {
-        playerJetpack = player.GetComponent<PlayerJetpack>();
-        playerTablet = player.GetComponent<PlayerTablet>();
-        playerInteractions = player.GetComponent<PlayerButtonInteraction>();
-        playerGoggles = player.GetComponent<PlayerGoggles>();
-
-        nofilter = GameObject.FindGameObjectsWithTag("NoFilter")[0];
-        red = GameObject.FindGameObjectsWithTag("Red")[0];
-        green = GameObject.FindGameObjectsWithTag("Green")[0];
-        blue = GameObject.FindGameObjectsWithTag("Blue")[0];
-        
+    {      
         Save saveInstance = new Save();
 
         saveInstance.playerPosition = (player.transform.position.x, player.transform.position.y);
