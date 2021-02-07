@@ -26,6 +26,7 @@ public class SaveLoadManager: MonoBehaviour
         {
             LoadGame();
         }*/
+        player = GameObject.FindGameObjectsWithTag("Player")[0];
     }
 
 
@@ -76,8 +77,6 @@ public class SaveLoadManager: MonoBehaviour
 
     public Save CreateSaveGameObject()
     {
-        player = GameObject.FindGameObjectsWithTag("Player")[0];
-
         playerJetpack = player.GetComponent<PlayerJetpack>();
         playerTablet = player.GetComponent<PlayerTablet>();
         playerInteractions = player.GetComponent<PlayerButtonInteraction>();
@@ -87,8 +86,7 @@ public class SaveLoadManager: MonoBehaviour
         red = GameObject.FindGameObjectsWithTag("Red")[0];
         green = GameObject.FindGameObjectsWithTag("Green")[0];
         blue = GameObject.FindGameObjectsWithTag("Blue")[0];
-
-
+        
         Save saveInstance = new Save();
 
         saveInstance.playerPosition = (player.transform.position.x, player.transform.position.y);
